@@ -9,7 +9,8 @@ public enum OrderStatus {
     DELIVERY_FAILURE("Delivery_Failure"),
     LOST_IN_TRANSIT("Lost_In_Transit"),
     RETURNED("Returned"),
-    REFUNDED("REFUNDED");
+    REFUND_INITIATED("Refund_Initiated"),
+    REFUNDED("Refunded");
 
     private final String status;
 

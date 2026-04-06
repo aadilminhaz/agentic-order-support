@@ -2,45 +2,36 @@ package com.ct.orderagent.services;
 
 import com.ct.orderagent.models.Order;
 import com.ct.orderagent.models.OrderStatus;
+import com.ct.orderagent.repo.OrderRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class OrderServiceImpl implements OrderService {
-    @Override
-    public OrderStatus getOrderStatus(String orderId) {
-        List<Order> orders = getOrders();
-        return orders.stream()
-                .filter(o -> o.getOrderId().equals(orderId)).findAny().map(Order::getOrderStatus).orElseThrow(()-> new RuntimeException("Order Not Found!"));
+
+    private final OrderRepository orderRepository;
+
+   public OrderServiceImpl(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    List<Order> getOrders() {
-        List<Order> orders = new ArrayList<>();
-        //mock orders
-        Order order_1 = new Order();
-        order_1.setOrderId("X_123");
-        order_1.setOrderStatus(OrderStatus.CONFIRMED);
+    @Override
+    public OrderStatus getOrderStatus(String orderId) {
+        Order order = orderRepository.getOrderDetails(orderId);
+        if (order == null) {
+            throw new RuntimeException("Order Not Found!");
+        }
+        return order.getOrderStatus();
+    }
 
-        Order order_2 = new Order();
-        order_2.setOrderId("X_121");
-        order_2.setOrderStatus(OrderStatus.DISPATCHED);
-
-        Order order_3 = new Order();
-        order_3.setOrderId("X_125");
-        order_3.setOrderStatus(OrderStatus.DELIVERY_FAILURE);
-
-        Order order_4 = new Order();
-        order_3.setOrderId("X_128");
-        order_3.setOrderStatus(OrderStatus.LOST_IN_TRANSIT);
-
-        orders.add(order_1);
-        orders.add(order_2);
-        orders.add(order_3);
-        orders.add(order_4);
-
-        return orders;
-
-
+    @Override
+    public Order reAttemptDelivery(String orderId) {
+        Order order = orderRepository.getOrderDetails(orderId);
+        if (order == null) {
+            throw new RuntimeException("Order Not Found!");
+        }
+        if (order.getOrderStatus() == OrderStatus.DELIVERY_FAILURE) {
+            order.setOrderStatus(OrderStatus.DISPATCHED);
+        }
+        orderRepository.saveOrder(orderId, order);
+        return order;
     }
 }

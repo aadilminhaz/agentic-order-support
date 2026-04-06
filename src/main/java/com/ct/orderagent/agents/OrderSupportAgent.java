@@ -1,5 +1,9 @@
 package com.ct.orderagent.agents;
 
+import com.ct.orderagent.repo.OrderRepository;
+import com.ct.orderagent.repo.OrderRepositoryMockImpl;
+import com.ct.orderagent.services.OrderService;
+import com.ct.orderagent.services.OrderServiceImpl;
 import com.ct.orderagent.tools.OrderTools;
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LlmAgent;
@@ -21,17 +25,17 @@ public final class OrderSupportAgent {
     private OrderSupportAgent() {}
 
     private static BaseAgent buildAgent() {
+        final OrderRepository orderRepository = new OrderRepositoryMockImpl();
+        final OrderService orderService = new OrderServiceImpl(orderRepository);
+        OrderTools orderTools = new OrderTools(orderService);
         return LlmAgent.builder()
                 .name("order-support-agent")
                 .description("Customer support agent for order status inquiries and issue resolution")
                 .model("gemini-2.5-flash")
                 .instruction(buildInstruction())
                 .tools(
-                        FunctionTool.create(OrderTools.class, "checkOrderStatus")
-                        //FunctionTool.create(OrderTools.class, "getResolutionOptions"),
-                        //FunctionTool.create(OrderTools.class, "triggerDeliveryRetry"),
-                        //FunctionTool.create(OrderTools.class, "processRefund"),
-                        //FunctionTool.create(OrderTools.class, "placeReplacementOrder")
+                        //FunctionTool.create(OrderTools.class, "checkOrderStatus")
+                        FunctionTool.create(orderTools, "checkOrderStatus")
                 )
                 .build();
     }
