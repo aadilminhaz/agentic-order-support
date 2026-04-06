@@ -4,7 +4,10 @@ import com.ct.orderagent.repo.OrderRepository;
 import com.ct.orderagent.repo.OrderRepositoryMockImpl;
 import com.ct.orderagent.services.OrderService;
 import com.ct.orderagent.services.OrderServiceImpl;
+import com.ct.orderagent.services.RefundService;
+import com.ct.orderagent.services.RefundServiceImpl;
 import com.ct.orderagent.tools.OrderTools;
+import com.ct.orderagent.tools.RefundTools;
 import com.google.adk.agents.BaseAgent;
 import com.google.adk.agents.LlmAgent;
 import com.google.adk.tools.FunctionTool;
@@ -28,14 +31,20 @@ public final class OrderSupportAgent {
         final OrderRepository orderRepository = new OrderRepositoryMockImpl();
         final OrderService orderService = new OrderServiceImpl(orderRepository);
         OrderTools orderTools = new OrderTools(orderService);
+
+        RefundService refundService = new RefundServiceImpl(orderRepository);
+        RefundTools refundTools = new RefundTools(refundService);
+
         return LlmAgent.builder()
                 .name("order-support-agent")
                 .description("Customer support agent for order status inquiries and issue resolution")
-                .model("gemini-2.5-flash")
+                .model("gemini-2.5-flash-lite")
                 .instruction(buildInstruction())
                 .tools(
-                        //FunctionTool.create(OrderTools.class, "checkOrderStatus")
-                        FunctionTool.create(orderTools, "checkOrderStatus")
+                        FunctionTool.create(orderTools, "checkOrderStatus"),
+                        FunctionTool.create(orderTools, "reAttemptDelivery"),
+                        FunctionTool.create(refundTools, "getRefundStatus"),
+                        FunctionTool.create(refundTools, "processRefund")
                 )
                 .build();
     }
@@ -57,24 +66,22 @@ public final class OrderSupportAgent {
                  to the order's status.
 
             3. **Assess and Act**:
-               - If `hasIssue` is false (IN_PROGRESS or COMPLETED), inform the customer
-                 of the status and offer to help with anything else.
-               - If `hasIssue` is true, call `getResolutionOptions` to understand what
-                 actions are available.
+               - If IN_PROGRESS, DISPATCHED, COMPLETED, or Slightly delayed, inform the customer
+                 of the status and expected delivery date, and offer to help with anything else.
+               - Else, call present resolution options defined in section 4 - **Present Options** to understand what
+                 actions are available, DO NOT initiate any action before understanding before taking input from the user.
 
             4. **Present Options**: Based on the resolution options returned:
                - For **RECOVERABLE** issues (delivery failures that can be retried):
                  - Explain the situation empathetically.
-                 - If `autoRetry` is true, immediately call `triggerDeliveryRetry` and
-                   inform the customer you have already re-scheduled their delivery.
-                 - Always offer the full list of `options` (e.g., retry delivery, refund).
-               - For **UNRECOVERABLE** issues (lost, destroyed, damaged):
+                 - if it's a delivery_Failure case, inform the customer that we can retry delivery once and ask if they would like to proceed with that.
+               - For **UNRECOVERABLE** issues (lost, destroyed, damaged, delayed beyond a certain threshold):
                  - Express sincere apologies.
-                 - Present all available `options` clearly (e.g., refund, replacement).
+                 - Present all available `options` clearly (e.g., refund).
                  - Ask the customer which they prefer.
 
             5. **Execute Chosen Action**:
-               - `RETRY_DELIVERY` → call `triggerDeliveryRetry`
+               - `RETRY_DELIVERY` → call `reAttemptDelivery`
                - `REQUEST_REFUND` → call `processRefund`
                - `PLACE_REPLACEMENT_ORDER` → call `placeReplacementOrder`
                - Relay the result and the `referenceId` to the customer as a confirmation
@@ -94,7 +101,7 @@ public final class OrderSupportAgent {
             - Never promise a specific delivery time unless the tool response includes one.
             - If a tool call fails, apologise and ask the customer to try again or contact
               support via phone.
-            - You may only perform actions that the tool `getResolutionOptions` confirms
+            - You may only perform actions that based on the options defined in section-4 (4. **Present Options**: ) confirms
               are available for the order.
             """;
     }
