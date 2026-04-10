@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  chat-ui:
+    build:
+      context: .
+      args:
+        # Override this to point to your actual backend
+        REACT_APP_BASE_URL: http://localhost:8080
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

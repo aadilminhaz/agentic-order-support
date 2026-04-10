@@ -1,6 +1,5 @@
 package com.ct.orderagent.services;
 
-import com.ct.orderagent.models.Order;
 import com.ct.orderagent.models.RefundResponse;
 
 public interface RefundService {

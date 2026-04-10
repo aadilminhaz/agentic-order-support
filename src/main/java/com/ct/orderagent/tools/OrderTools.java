@@ -2,16 +2,20 @@ package com.ct.orderagent.tools;
 
 import com.ct.orderagent.services.OrderService;
 import com.google.adk.tools.Annotations;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Slf4j
-public record OrderTools(OrderService orderService) {
+
+@Component
+@RequiredArgsConstructor
+public class OrderTools  {
 
     private static final Logger log = LoggerFactory.getLogger(OrderTools.class);
+    private final OrderService orderService;
 
     @Annotations.Schema(description = "Fetches the current status and details of an order by order ID")
     public Map<String, Object> checkOrderStatus(

@@ -2,22 +2,19 @@ package com.ct.orderagent.tools;
 
 import com.ct.orderagent.services.RefundService;
 import com.google.adk.tools.Annotations;
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Slf4j
+@Component
+@RequiredArgsConstructor
 public class RefundTools {
 
     private static final Logger log = LoggerFactory.getLogger(RefundTools.class);
-
     private final RefundService refundService;
-
-    public RefundTools(RefundService refundService) {
-        this.refundService = refundService;
-    }
 
     @Annotations.Schema(description = "Processes a refund for a given order ID and returns the refund details")
     public Map<String, Object> processRefund(

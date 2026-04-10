@@ -1,0 +1,8 @@
+com:
+  ct:
+    orderagent:
+      agent:
+        name: order-support-agent
+        description: Customer support agent for order status inquiries and issue resolution
+        ai-model: gemini-2.5-flash
+        system-prompt: classpath:prompts/OrderSupportAgent_Prompts.txt

@@ -1,0 +1,60 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Maven
+.m2/
+mvn-debug.log
+mvn-error.log
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Documentation
+*.md
+docs/
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Node/UI specific
+agentic-order-support-ui/build/
+agentic-order-support-ui/dist/
+agentic-order-support-ui/.cache/
+
