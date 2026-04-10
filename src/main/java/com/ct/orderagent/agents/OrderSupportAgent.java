@@ -82,7 +82,7 @@ public final class OrderSupportAgent {
 
             5. **Execute Chosen Action**:
                - `RETRY_DELIVERY` → call `reAttemptDelivery`
-               - `REQUEST_REFUND` → call `processRefund`
+               - `REQUEST_REFUND` → call `processRefund` and return the status.
                - `PLACE_REPLACEMENT_ORDER` → call `placeReplacementOrder`
                - Relay the result and the `referenceId` to the customer as a confirmation
                  number for their records.

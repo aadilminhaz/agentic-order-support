@@ -2,6 +2,29 @@
 
 Agentic Order support powered by Google ADK & Gemini, built with Java 21.
 
+### Demo
+
+Scenario: where the orders have places and are in different stages of the journey.
+This is an Agentic Custom Support system, capable enough to handle user queries regarding the orders and take appropriate actions to support the customer.
+
+This system has following capabilities:
+- Interact with the customer in a polite professional way
+- Check order status for the user
+- In case of any problem wiht the order delivery, the agent can help customer with multiple options
+- Can initiate a re-delivery attempt if the customer wants
+- Can initiate a refund if the order can't be restored or if the customer wishes to do so.
+
+### In action:
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+
+
+
+
 ### Setup
 
 - Setup Gemini key in the sprint boot application's environment variable section:
