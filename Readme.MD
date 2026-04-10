@@ -10,7 +10,7 @@ This is an Agentic Custom Support system, capable enough to handle user queries 
 This system has following capabilities:
 - Interact with the customer in a polite professional way
 - Check order status for the user
-- In case of any problem wiht the order delivery, the agent can help customer with multiple options
+- In case of any problem with the order delivery, the agent can help customer with multiple options
 - Can initiate a re-delivery attempt if the customer wants
 - Can initiate a refund if the order can't be restored or if the customer wishes to do so.
 
