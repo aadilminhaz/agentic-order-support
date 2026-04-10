@@ -17,13 +17,13 @@ This is a **Single Agent, Multi-Capability Agentic AI** system with following ca
 ### In action:
 
 - Checking Order Status:
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 - Handling Recoverable Order Failure, and try delivery again
-![img_5.png](img_5.png)
+![img_5.png](images/img_5.png)
 
 - Handling Uncoverable Order Failure, and process refund
-![img_3.png](img_3.png)
+![img_3.png](images/img_3.png)
 
 
 
@@ -42,12 +42,14 @@ There are two ways to run the agent:
   -Dexec.mainClass="com.google.adk.web.AdkWebServer" \
   -Dexec.classpathScope="compile"
 
-Simple run instruction:
+#### Simple run instruction:
 - Go to the project directory
 - run spring boot application with GEMINI KEY as environment variable (use way to injecting GOOGLE_API_KEY)
 - > GOOGLE_API_KEY=your_google_api_key mvn spring-boot:run
-  
-- Agent's inference API will be available at localhost:8080/agent
+
+- **Agent's inference API will be available at localhost:8080/agent**
+
+#### Agent Inference API
 
 - This is a sample curl command for the inference:
 - > curl --location 'localhost:8080/agent' \
