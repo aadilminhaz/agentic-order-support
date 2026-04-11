@@ -4,8 +4,7 @@ Agentic Order support powered by Google ADK & Gemini, built with Java 26.
 
 ### Introduction
 Scenario:
-Orders have been placed and are currently at different stages in their lifecycle.
-This is an agentic customer support system designed to handle user queries related to orders and take appropriate actions to assist customers effectively.
+Orders are actively progressing through various stages of their lifecycle. This agentic customer support system goes beyond basic order tracking, it intelligently understands user queries, diagnoses critical issues, and takes decisive actions to resolve them. By combining real-time insights with autonomous intervention capabilities, it ensures not just visibility, but end-to-end resolution and a seamless customer experience.
 
 This is a **Single Agent, Multi-Capability Agentic AI** system with following capabilities:
 - Act as a custom support executive and interact with customers in a polite and professional manner
@@ -16,14 +15,17 @@ This is a **Single Agent, Multi-Capability Agentic AI** system with following ca
 
 ### In action:
 
-- Checking Order Status:
-![img_1.png](images/img_1.png)
+#### Checking Order Status:
+![img_1.png](images/confirmed.png)
 
-- Handling Recoverable Order Failure, and try delivery again
-![img_5.png](images/img_5.png)
 
-- Handling Uncoverable Order Failure, and process refund
-![img_3.png](images/img_3.png)
+
+#### Handling Recoverable Order Failure, and try delivery again
+![delivery_failure.png](images/delivery_failure.png)
+
+
+#### Handling Uncoverable Order Failure, and process refund
+![lost_in_transit.png](images/lost_in_transit.png)
 
 
 

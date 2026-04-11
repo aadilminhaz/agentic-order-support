@@ -13,10 +13,10 @@ function generateId(prefix) {
 function extractMessage(raw) {
   // Strip everything before the last sentence (after all FunctionCall/FunctionResponse blocks)
   // Strategy: find the last occurrence of a pattern that ends a function block and take what's after, to fetch the relevant response of the user
-  const functionResponsePattern = /FunctionResponse\{[^}]*\}[^}]*\}/g;
+  const functionPattern = /(FunctionCall|FunctionResponse)\{.*\}/g;
   let lastIndex = 0;
   let match;
-  while ((match = functionResponsePattern.exec(raw)) !== null) {
+  while ((match = functionPattern.exec(raw)) !== null) {
     lastIndex = match.index + match[0].length;
   }
   if (lastIndex > 0) {
