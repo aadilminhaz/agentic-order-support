@@ -30,7 +30,7 @@ This is a **Single Agent, Multi-Capability Agentic AI** system with following ca
 
 ### . 
 
-#### A more detailed view of the internal flow using ADK Web UI
+#### A more detailed view of Agent's internal flow using ADK Web UI
 ![img.png](img.png)
 
 
