@@ -18,13 +18,14 @@ This is a **Single Agent, Multi-Capability Agentic AI** system with following ca
 #### Checking Order Status:
 ![img_1.png](images/confirmed.png)
 
+### . 
 
-
-#### Handling Recoverable Order Failure, and try delivery again
+#### Handling recoverable order failures and reattempting delivery proactively.
 ![delivery_failure.png](images/delivery_failure.png)
 
+### .
 
-#### Handling Uncoverable Order Failure, and process refund
+#### Handling unrecoverable order failures and initiating refunds seamlessly.
 ![lost_in_transit.png](images/lost_in_transit.png)
 
 
